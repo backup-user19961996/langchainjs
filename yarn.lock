@@ -27632,6 +27632,7 @@ __metadata:
     eslint-plugin-no-instanceof: ^1.0.1
     eslint-plugin-prettier: ^4.2.1
     expr-eval: ^2.0.2
+    faiss-node: ^0.1.1
     flat: ^5.0.2
     graphql: ^16.6.0
     hnswlib-node: ^1.4.2
@@ -27647,6 +27648,7 @@ __metadata:
     p-queue: ^6.6.2
     p-retry: 4
     pdf-parse: 1.1.1
+    pickleparser: ^0.1.0
     playwright: ^1.32.1
     prettier: ^2.8.3
     puppeteer: ^19.7.2
@@ -27686,12 +27688,14 @@ __metadata:
     cohere-ai: ^5.0.2
     d3-dsv: ^2.0.0
     epub2: ^3.0.1
+    faiss-node: ^0.1.1
     hnswlib-node: ^1.4.2
     html-to-text: ^9.0.5
     mammoth: "*"
     meriyah: "*"
     mongodb: ^5.2.0
     pdf-parse: 1.1.1
+    pickleparser: ^0.1.0
     playwright: ^1.32.1
     puppeteer: ^19.7.2
     redis: ^4.6.4
@@ -27742,6 +27746,8 @@ __metadata:
       optional: true
     epub2:
       optional: true
+    faiss-node:
+      optional: true
     hnswlib-node:
       optional: true
     html-to-text:
@@ -27753,6 +27759,8 @@ __metadata:
     mongodb:
       optional: true
     pdf-parse:
+      optional: true
+    pickleparser:
       optional: true
     playwright:
       optional: true
