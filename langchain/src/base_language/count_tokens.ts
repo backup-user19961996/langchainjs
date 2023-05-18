@@ -1,9 +1,12 @@
+export let testCountTokensInText = "countTokensInText";
 export let countTokensInText: (text: string) => number = (text: string) => {
   return text.split(/\s+/).length;
 };
 
 export const setCountTokensInTextFunc = (func: typeof countTokensInText) => {
   countTokensInText = func;
+  testCountTokensInText = "custom countTokensInText function";
+  console.log("register custom countTokensInText function");
 };
 
 export const getModelNameForTiktoken = (modelName: string): string => {

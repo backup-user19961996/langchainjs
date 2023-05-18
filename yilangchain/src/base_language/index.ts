@@ -7,6 +7,8 @@ import { CallbackManager, Callbacks } from "../callbacks/manager.js";
 import { AsyncCaller, AsyncCallerParams } from "../util/async_caller.js";
 import { countTokensInText } from "./count_tokens.js";
 
+export * from "./count_tokens.js";
+
 const getVerbosity = () => false;
 
 export type SerializedLLM = {

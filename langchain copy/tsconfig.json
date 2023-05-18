@@ -2,7 +2,7 @@
   "extends": "@tsconfig/recommended",
   "compilerOptions": {
     "outDir": "../dist",
-    "rootDir": "./src",
+    "rootDir": "../yilangchain/src",
     "target": "ES2021",
     "lib": [
       "ES2021",
@@ -23,12 +23,12 @@
     "strict": true
   },
   "include": [
-    "src/**/*"
+    "../yilangchain/src/**/*"
   ],
   "exclude": [
-    "node_modules",
-    "modify-langchain",
-    "docs"
+    "../yilangchain/node_modules",
+    "../yilangchain/modify-langchain",
+    "../yilangchain/docs"
   ],
   "typedocOptions": {
     "entryPoints": [
