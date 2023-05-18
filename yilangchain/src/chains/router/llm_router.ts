@@ -1,10 +1,10 @@
 import { BasePromptTemplate } from "../../prompts/base.js";
-import { LLMChain } from "../llm_chain.js";
+import { LLMChain } from "../../chains/llm_chain.js";
 import { RouterChain } from "./multi_route.js";
 import { CallbackManagerForChainRun } from "../../callbacks/manager.js";
 import { ChainValues } from "../../schema/index.js";
 import { BaseLanguageModel } from "../../base_language/index.js";
-import { ChainInputs } from "../base.js";
+import { ChainInputs } from "../../chains/base.js";
 
 export type RouterOutputSchema = {
   destination: string;

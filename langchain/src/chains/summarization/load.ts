@@ -35,12 +35,7 @@ export type SummarizationChainParams = BaseParams &
 
 export const loadSummarizationChain = (
   llm: BaseLanguageModel,
-  params: SummarizationChainParams & {
-    skipCalculateToken?: boolean;
-    streamOnlyOnFinalStep?: boolean;
-  } = {
-    type: "map_reduce",
-  }
+  params: SummarizationChainParams = { type: "map_reduce" }
 ) => {
   const { verbose } = params;
   if (params.type === "stuff") {
@@ -76,8 +71,6 @@ export const loadSummarizationChain = (
       documentVariableName: "text",
       returnIntermediateSteps,
       verbose,
-      skipCalculateToken: params.skipCalculateToken,
-      streamOnlyOnFinalStep: params.streamOnlyOnFinalStep,
     });
     return chain;
   }

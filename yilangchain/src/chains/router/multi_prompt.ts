@@ -2,12 +2,12 @@ import { z } from "zod";
 import { BaseLanguageModel } from "../../base_language/index.js";
 import { MultiRouteChain, MultiRouteChainInput } from "./multi_route.js";
 import { STRUCTURED_MULTI_PROMPT_ROUTER_TEMPLATE } from "./multi_prompt_prompt.js";
-import { BaseChain } from "../base.js";
+import { BaseChain } from "../../chains/base.js";
 import { interpolateFString } from "../../prompts/template.js";
-import { LLMChain } from "../llm_chain.js";
+import { LLMChain } from "../../chains/llm_chain.js";
 import { PromptTemplate } from "../../prompts/prompt.js";
 import { LLMRouterChain } from "./llm_router.js";
-import { ConversationChain } from "../conversation.js";
+import { ConversationChain } from "../../chains/conversation.js";
 import { zipEntries } from "./utils.js";
 import { RouterOutputParser } from "../../output_parsers/router.js";
 

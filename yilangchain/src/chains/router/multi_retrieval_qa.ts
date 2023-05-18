@@ -1,18 +1,18 @@
 import { z } from "zod";
 import { BaseLanguageModel } from "../../base_language/index.js";
 import { MultiRouteChain, MultiRouteChainInput } from "./multi_route.js";
-import { BaseChain } from "../base.js";
+import { BaseChain } from "../../chains/base.js";
 import { interpolateFString } from "../../prompts/template.js";
 import { PromptTemplate } from "../../prompts/prompt.js";
 import { LLMRouterChain } from "./llm_router.js";
 import {
   ConversationChain,
   DEFAULT_TEMPLATE,
-} from "../conversation.js";
+} from "../../chains/conversation.js";
 import { BaseRetriever } from "../../schema/index.js";
 import { STRUCTURED_MULTI_RETRIEVAL_ROUTER_TEMPLATE } from "./multi_retrieval_prompt.js";
 import { zipEntries } from "./utils.js";
-import { RetrievalQAChain } from "../retrieval_qa.js";
+import { RetrievalQAChain } from "../../chains/retrieval_qa.js";
 import { RouterOutputParser } from "../../output_parsers/router.js";
 
 export type MultiRetrievalDefaults = {

@@ -686,7 +686,7 @@ declare module "pdf-parse/lib/pdf.js/v1.10.100/build/pdf.js" {
    */
   export class PDFDocumentLoadingTask {
     static "__#16@#docId": number;
-    _capability: import("../shared/util.js.js").PromiseCapability;
+    _capability: import("../shared/util.js").PromiseCapability;
     _transport: any;
     _worker: any;
     /**
@@ -1340,7 +1340,7 @@ declare module "pdf-parse/lib/pdf.js/v1.10.100/build/pdf.js" {
     name: any;
     destroyed: boolean;
     verbosity: number;
-    _readyCapability: import("../shared/util.js.js").PromiseCapability;
+    _readyCapability: import("../shared/util.js").PromiseCapability;
     _port: any;
     _webWorker: Worker | null;
     _messageHandler: MessageHandler | null;

@@ -1,13 +1,9 @@
-export let testCountTokensInText = "countTokensInText";
-export let countTokensInText: (text: string) => number = (text: string) => {
-  return text.split(/\s+/).length;
-};
+import { type TiktokenModel } from "js-tiktoken/lite";
+import { encodingForModel } from "../util/tiktoken.js";
 
-export const setCountTokensInTextFunc = (func: typeof countTokensInText) => {
-  countTokensInText = func;
-};
+// https://www.npmjs.com/package/js-tiktoken
 
-export const getModelNameForTiktoken = (modelName: string): string => {
+export const getModelNameForTiktoken = (modelName: string): TiktokenModel => {
   if (modelName.startsWith("gpt-3.5-turbo-")) {
     return "gpt-3.5-turbo";
   }
@@ -20,7 +16,7 @@ export const getModelNameForTiktoken = (modelName: string): string => {
     return "gpt-4";
   }
 
-  return modelName;
+  return modelName as TiktokenModel;
 };
 
 export const getEmbeddingContextSize = (modelName?: string): number => {
@@ -59,42 +55,8 @@ export const getModelContextSize = (modelName: string): number => {
 
 interface CalculateMaxTokenProps {
   prompt: string;
-  modelName: string;
+  modelName: TiktokenModel;
 }
-
-export const batchTextByTokens = async (
-  text: string,
-  chunkSize: number,
-  chunkOverlapToken: number
-) => {
-  const splitted = text.split(/\s+/);
-
-  let currentGroup: string[] = [];
-  let currentTokenCount = 0;
-  const groups = [];
-
-  for (let i = 0; i < splitted.length; i++) {
-    const word = splitted[i];
-    const tokenCount = countTokensInText(word);
-
-    if (currentTokenCount + tokenCount > chunkSize) {
-      groups.push(currentGroup.join(" "));
-
-      const overlapStart = Math.max(0, currentGroup.length - chunkOverlapToken);
-      currentGroup = currentGroup.slice(overlapStart);
-      currentTokenCount = countTokensInText(currentGroup.join(" "));
-    }
-
-    currentGroup.push(word);
-    currentTokenCount += tokenCount;
-  }
-
-  if (currentGroup.length > 0) {
-    groups.push(currentGroup.join(" "));
-  }
-
-  return groups;
-};
 
 export const calculateMaxTokens = async ({
   prompt,
@@ -102,6 +64,14 @@ export const calculateMaxTokens = async ({
 }: CalculateMaxTokenProps) => {
   // fallback to approximate calculation if tiktoken is not available
   let numTokens = Math.ceil(prompt.length / 4);
+
+  try {
+    numTokens = (await encodingForModel(modelName)).encode(prompt).length;
+  } catch (error) {
+    console.warn(
+      "Failed to calculate number of tokens, falling back to approximate count"
+    );
+  }
 
   const maxTokens = getModelContextSize(modelName);
   return maxTokens - numTokens;

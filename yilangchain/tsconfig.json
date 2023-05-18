@@ -27,7 +27,7 @@
   ],
   "exclude": [
     "node_modules",
-    "modify-langchain",
+    "dist",
     "docs"
   ],
   "typedocOptions": {

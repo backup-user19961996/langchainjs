@@ -2,7 +2,7 @@ import {
   CallbackManagerForChainRun,
   Callbacks,
 } from "../../callbacks/manager.js";
-import { BaseChain, ChainInputs } from "../base.js";
+import { BaseChain, ChainInputs } from "../../chains/base.js";
 import { ChainValues } from "../../schema/index.js";
 
 type Inputs = {

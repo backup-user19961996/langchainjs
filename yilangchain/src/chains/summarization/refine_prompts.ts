@@ -9,7 +9,7 @@ We have the opportunity to refine the existing summary
 ------------
 
 Given the new context, refine the original summary
-If the context isn't useful, return the original summary. If the content is not in English, reply in the language of the content is in.
+If the context isn't useful, return the original summary.
 
 REFINED SUMMARY:`;
 
