@@ -106,6 +106,8 @@ export interface MapReduceDocumentsChainInput extends StuffDocumentsChainInput {
   combineDocumentChain: BaseChain;
   /** Return the results of the map steps in the output. */
   returnIntermediateSteps?: boolean;
+  skipCalculateToken?: boolean;
+  streamOnlyOnFinalStep?: boolean;
 }
 
 /**
@@ -125,6 +127,8 @@ export class MapReduceDocumentsChain
 
   returnIntermediateSteps = false;
 
+  streamOnlyOnFinalStep = false;
+
   get inputKeys() {
     return [this.inputKey, ...this.combineDocumentChain.inputKeys];
   }
@@ -139,6 +143,8 @@ export class MapReduceDocumentsChain
 
   ensureMapStep = false;
 
+  skipCalculateToken = false;
+
   combineDocumentChain: BaseChain;
 
   constructor(fields: MapReduceDocumentsChainInput) {
@@ -152,6 +158,8 @@ export class MapReduceDocumentsChain
     this.maxTokens = fields.maxTokens ?? this.maxTokens;
     this.maxIterations = fields.maxIterations ?? this.maxIterations;
     this.returnIntermediateSteps = fields.returnIntermediateSteps ?? false;
+    this.skipCalculateToken = fields.skipCalculateToken ?? false;
+    this.streamOnlyOnFinalStep = fields.streamOnlyOnFinalStep ?? false;
   }
 
   /** @ignore */
@@ -174,15 +182,19 @@ export class MapReduceDocumentsChain
         ...rest,
       }));
 
-      // Calculate the total tokens required in the input
-      const promises = inputs.map(async (i) => {
-        const prompt = await this.llmChain.prompt.format(i);
-        return this.llmChain.llm.getNumTokens(prompt);
-      });
+      let length = 0;
 
-      const length = await Promise.all(promises).then((results) =>
-        results.reduce((a, b) => a + b, 0)
-      );
+      if (!(this.skipCalculateToken && i === 0)) {
+        // Calculate the total tokens required in the input
+        const promises = inputs.map(async (i) => {
+          const prompt = await this.llmChain.prompt.format(i);
+          return this.llmChain.llm.getNumTokens(prompt);
+        });
+
+        length = await Promise.all(promises).then((results) =>
+          results.reduce((a, b) => a + b, 0)
+        );
+      }
 
       const canSkipMapStep = i !== 0 || !this.ensureMapStep;
       const withinTokenLimit = length < this.maxTokens;
@@ -194,7 +206,11 @@ export class MapReduceDocumentsChain
 
       const results = await this.llmChain.apply(
         inputs,
-        runManager ? [runManager.getChild()] : undefined
+        this.streamOnlyOnFinalStep
+          ? undefined
+          : runManager
+          ? [runManager.getChild()]
+          : undefined
       );
       const { outputKey } = this.llmChain;
 
