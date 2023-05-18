@@ -11,6 +11,8 @@ import { encodingForModel } from "../util/tiktoken.js";
 
 const getVerbosity = () => false;
 
+export * from "./count_tokens.js";
+
 export type SerializedLLM = {
   _model: string;
   _type: string;
