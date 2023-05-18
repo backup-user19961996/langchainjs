@@ -1,6 +1,5 @@
-import type * as tiktoken from "js-tiktoken";
+import { batchTextByTokens } from "./base_language/count_tokens.js";
 import { Document } from "./document.js";
-import { getEncoding } from "./util/tiktoken.js";
 
 export interface TextSplitterParams {
   chunkSize: number;
@@ -21,7 +20,7 @@ export abstract class TextSplitter implements TextSplitterParams {
     }
   }
 
-  abstract splitText(text: string): Promise<string[]>;
+  abstract splitText(text: string): string[];
 
   async createDocuments(
     texts: string[],
@@ -35,7 +34,7 @@ export abstract class TextSplitter implements TextSplitterParams {
       const text = texts[i];
       let lineCounterIndex = 1;
       let prevChunk = null;
-      for (const chunk of await this.splitText(text)) {
+      for (const chunk of this.splitText(text)) {
         // we need to count the \n that are in the text before getting removed by the splitting
         let numberOfIntermediateNewLines = 0;
         if (prevChunk) {
@@ -147,7 +146,7 @@ export class CharacterTextSplitter
     this.separator = fields?.separator ?? this.separator;
   }
 
-  async splitText(text: string): Promise<string[]> {
+  splitText(text: string): string[] {
     // First we naively split the large input into a bunch of smaller ones.
     let splits: string[];
     if (this.separator) {
@@ -175,7 +174,7 @@ export class RecursiveCharacterTextSplitter
     this.separators = fields?.separators ?? this.separators;
   }
 
-  async splitText(text: string): Promise<string[]> {
+  splitText(text: string): string[] {
     const finalChunks: string[] = [];
 
     // Get appropriate separator to use
@@ -210,7 +209,7 @@ export class RecursiveCharacterTextSplitter
           finalChunks.push(...mergedText);
           goodSplits = [];
         }
-        const otherInfo = await this.splitText(s);
+        const otherInfo = this.splitText(s);
         finalChunks.push(...otherInfo);
       }
     }
@@ -223,7 +222,7 @@ export class RecursiveCharacterTextSplitter
 }
 
 export interface TokenTextSplitterParams extends TextSplitterParams {
-  encodingName: tiktoken.TiktokenEncoding;
+  encodingName: string;
   allowedSpecial: "all" | Array<string>;
   disallowedSpecial: "all" | Array<string>;
 }
@@ -235,48 +234,22 @@ export class TokenTextSplitter
   extends TextSplitter
   implements TokenTextSplitterParams
 {
-  encodingName: tiktoken.TiktokenEncoding;
+  encodingName: string;
 
   allowedSpecial: "all" | Array<string>;
 
   disallowedSpecial: "all" | Array<string>;
 
-  private tokenizer: tiktoken.Tiktoken;
-
   constructor(fields?: Partial<TokenTextSplitterParams>) {
     super(fields);
 
-    this.encodingName = fields?.encodingName ?? "gpt2";
+    this.encodingName = "gpt3.5-turbo";
     this.allowedSpecial = fields?.allowedSpecial ?? [];
     this.disallowedSpecial = fields?.disallowedSpecial ?? "all";
   }
 
-  async splitText(text: string): Promise<string[]> {
-    if (!this.tokenizer) {
-      this.tokenizer = await getEncoding(this.encodingName);
-    }
-
-    const splits: string[] = [];
-
-    const input_ids = this.tokenizer.encode(
-      text,
-      this.allowedSpecial,
-      this.disallowedSpecial
-    );
-
-    let start_idx = 0;
-    let cur_idx = Math.min(start_idx + this.chunkSize, input_ids.length);
-    let chunk_ids = input_ids.slice(start_idx, cur_idx);
-
-    while (start_idx < input_ids.length) {
-      splits.push(this.tokenizer.decode(chunk_ids));
-
-      start_idx += this.chunkSize - this.chunkOverlap;
-      cur_idx = Math.min(start_idx + this.chunkSize, input_ids.length);
-      chunk_ids = input_ids.slice(start_idx, cur_idx);
-    }
-
-    return splits;
+  splitText(text: string): string[] {
+    return batchTextByTokens(text, this.chunkSize, this.chunkOverlap);
   }
 }
 

@@ -1,4 +1,3 @@
-import type { TiktokenModel } from "js-tiktoken/lite";
 import {
   Configuration,
   ConfigurationParameters,
@@ -279,7 +278,7 @@ export class OpenAI extends BaseLLM implements OpenAIInput, AzureOpenAIInput {
       params.max_tokens = await calculateMaxTokens({
         prompt: prompts[0],
         // Cast here to allow for other models that may not fit the union
-        modelName: this.modelName as TiktokenModel,
+        modelName: this.modelName,
       });
     }
 

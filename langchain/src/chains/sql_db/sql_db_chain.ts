@@ -1,4 +1,3 @@
-import type { TiktokenModel } from "js-tiktoken/lite";
 import { DEFAULT_SQL_DATABASE_PROMPT } from "./sql_db_prompt.js";
 import { BaseChain, ChainInputs } from "../base.js";
 import type { OpenAI } from "../../llms/openai.js";
@@ -176,7 +175,7 @@ export class SqlDatabaseChain extends BaseChain {
     const maxToken = await calculateMaxTokens({
       prompt: stringWeSend,
       // Cast here to allow for other models that may not fit the union
-      modelName: llm.modelName as TiktokenModel,
+      modelName: llm.modelName,
     });
 
     if (maxToken < llm.maxTokens) {

@@ -1,5 +1,5 @@
 {
-  "name": "langchainjs",
+  "name": "@yi/langchainjs",
   "version": "0.0.4",
   "private": true,
   "engines": {
@@ -50,6 +50,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "gpt3-tokenizer": "^1.1.5",
     "turbo": "latest"
   },
   "resolutions": {
