@@ -20,7 +20,7 @@ export abstract class TextSplitter implements TextSplitterParams {
     }
   }
 
-  abstract splitText(text: string): string[];
+  abstract splitText(text: string): Promise<string[]>;
 
   async createDocuments(
     texts: string[],
@@ -34,7 +34,7 @@ export abstract class TextSplitter implements TextSplitterParams {
       const text = texts[i];
       let lineCounterIndex = 1;
       let prevChunk = null;
-      for (const chunk of this.splitText(text)) {
+      for (const chunk of await this.splitText(text)) {
         // we need to count the \n that are in the text before getting removed by the splitting
         let numberOfIntermediateNewLines = 0;
         if (prevChunk) {
@@ -146,7 +146,7 @@ export class CharacterTextSplitter
     this.separator = fields?.separator ?? this.separator;
   }
 
-  splitText(text: string): string[] {
+  async splitText(text: string): Promise<string[]> {
     // First we naively split the large input into a bunch of smaller ones.
     let splits: string[];
     if (this.separator) {
@@ -174,7 +174,7 @@ export class RecursiveCharacterTextSplitter
     this.separators = fields?.separators ?? this.separators;
   }
 
-  splitText(text: string): string[] {
+  async splitText(text: string): Promise<string[]> {
     const finalChunks: string[] = [];
 
     // Get appropriate separator to use
@@ -209,7 +209,7 @@ export class RecursiveCharacterTextSplitter
           finalChunks.push(...mergedText);
           goodSplits = [];
         }
-        const otherInfo = this.splitText(s);
+        const otherInfo = await this.splitText(s);
         finalChunks.push(...otherInfo);
       }
     }
@@ -248,7 +248,7 @@ export class TokenTextSplitter
     this.disallowedSpecial = fields?.disallowedSpecial ?? "all";
   }
 
-  splitText(text: string): string[] {
+  async splitText(text: string): Promise<string[]> {
     return batchTextByTokens(text, this.chunkSize, this.chunkOverlap);
   }
 }

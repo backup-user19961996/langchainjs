@@ -5,7 +5,7 @@ import {
 } from "../schema/index.js";
 import { CallbackManager, Callbacks } from "../callbacks/manager.js";
 import { AsyncCaller, AsyncCallerParams } from "../util/async_caller.js";
-import { countTokensInText } from "./count_tokens.js";
+import { createCountTokensInText } from "./count_tokens.js";
 
 const getVerbosity = () => false;
 
@@ -125,8 +125,8 @@ export abstract class BaseLanguageModel
   async getNumTokens(text: string) {
     // fallback to approximate calculation if tiktoken is not available
     let numTokens = Math.ceil(text.length / 4);
-
-    numTokens = countTokensInText(text);
+    const counter = await createCountTokensInText();
+    numTokens = await counter(text);
 
     return numTokens;
   }

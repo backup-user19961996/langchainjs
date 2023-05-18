@@ -80,3 +80,5 @@ export async function checkTreeShaking() {
     console.log("Tree shaking checks passed!");
   }
 }
+
+checkTreeShaking();

@@ -5,6 +5,7 @@
   "engines": {
     "node": ">=18"
   },
+  "main": "./langchain/index.js",
   "workspaces": [
     "langchain",
     "examples",
