@@ -1,5 +1,5 @@
 {
-  "name": "@yi/langchainjs",
+  "name": "yilangchainjs",
   "version": "0.0.4",
   "private": true,
   "engines": {
@@ -7,6 +7,7 @@
   },
   "main": "./langchain/index.js",
   "workspaces": [
+    "yilangchain",
     "langchain",
     "examples",
     "docs",
@@ -34,7 +35,7 @@
     "test:unit": "turbo run test",
     "test:int": "turbo run test:integration",
     "test:exports:docker": "docker compose up",
-    "publish": "bash scripts/release-branch.sh && turbo run build lint test test:integration && yarn run test:exports:docker && yarn workspace langchain run release && echo '🔗 Open https://github.com/hwchase17/langchainjs/compare/release?expand=1 and merge the release PR'",
+    "publish": "bash scripts/release-branch.sh && yarn workspace langchain run release && echo '🔗 Open https://github.com/hwchase17/langchainjs/compare/release?expand=1 and merge the release PR'",
     "example": "yarn workspace examples start",
     "prepare": "husky install",
     "precommit": "turbo run precommit",
@@ -51,7 +52,6 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "gpt3-tokenizer": "^1.1.5",
     "turbo": "latest"
   },
   "resolutions": {

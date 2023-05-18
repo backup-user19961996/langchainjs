@@ -8866,21 +8866,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yi/langchainjs@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@yi/langchainjs@workspace:."
-  dependencies:
-    "@tsconfig/recommended": ^1.0.2
-    dotenv: ^16.0.3
-    gpt3-tokenizer: ^1.1.5
-    husky: ^8.0.3
-    lint-staged: ^13.1.1
-    prettier: ^2.8.3
-    turbo: latest
-    typescript: ^5.0.0
-  languageName: unknown
-  linkType: soft
-
 "@zilliz/milvus2-sdk-node@npm:^2.2.0":
   version: 2.2.4
   resolution: "@zilliz/milvus2-sdk-node@npm:2.2.4"
@@ -9362,13 +9347,6 @@ __metadata:
     get-intrinsic: ^1.1.3
     is-string: ^1.0.7
   checksum: f22f8cd8ba8a6448d91eebdc69f04e4e55085d09232b5216ee2d476dab3ef59984e8d1889e662c6a0ed939dcb1b57fd05b2c0209c3370942fc41b752c82a2ca5
-  languageName: node
-  linkType: hard
-
-"array-keyed-map@npm:^2.1.3":
-  version: 2.1.3
-  resolution: "array-keyed-map@npm:2.1.3"
-  checksum: 53b45671922bbe7a7eb34950887fd4b1ba4154b0e0002523efa8fb352b320aaa6f798e4d7af151fc8dd4f3365996974f40f141e201d9aae90ea8b3383daf98f8
   languageName: node
   linkType: hard
 
@@ -12452,9 +12430,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dpdm@patch:dpdm@npm%3A3.12.0#./.yarn/patches/dpdm-npm-3.12.0-0dfdd8e3b8.patch::locator=%40yi%2Flangchainjs%40workspace%3A.":
+"dpdm@patch:dpdm@npm%3A3.12.0#./.yarn/patches/dpdm-npm-3.12.0-0dfdd8e3b8.patch::locator=yilangchainjs%40workspace%3A.":
   version: 3.12.0
-  resolution: "dpdm@patch:dpdm@npm%3A3.12.0#./.yarn/patches/dpdm-npm-3.12.0-0dfdd8e3b8.patch::version=3.12.0&hash=2406a8&locator=%40yi%2Flangchainjs%40workspace%3A."
+  resolution: "dpdm@patch:dpdm@npm%3A3.12.0#./.yarn/patches/dpdm-npm-3.12.0-0dfdd8e3b8.patch::version=3.12.0&hash=2406a8&locator=yilangchainjs%40workspace%3A."
   dependencies:
     "@types/fs-extra": ^11.0.1
     "@types/glob": ^8.0.0
@@ -15056,15 +15034,6 @@ __metadata:
     to-readable-stream: ^1.0.0
     url-parse-lax: ^3.0.0
   checksum: 941807bd9704bacf5eb401f0cc1212ffa1f67c6642f2d028fd75900471c221b1da2b8527f4553d2558f3faeda62ea1cf31665f8b002c6137f5de8732f07370b0
-  languageName: node
-  linkType: hard
-
-"gpt3-tokenizer@npm:^1.1.5":
-  version: 1.1.5
-  resolution: "gpt3-tokenizer@npm:1.1.5"
-  dependencies:
-    array-keyed-map: ^2.1.3
-  checksum: 9d458f1d57fc381f7e348780c90aa25758a224b2b06424ea255c6f0693b16d06eaaa4f4a26635d916cd6131ed47eba7f66bde81190a5f5bc606aa9a97bacb51a
   languageName: node
   linkType: hard
 
@@ -25484,9 +25453,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc-plugin-markdown@patch:typedoc-plugin-markdown@npm%3A4.0.0-next.6#./.yarn/patches/typedoc-plugin-markdown-npm-4.0.0-next.6-96b4b47746.patch::locator=%40yi%2Flangchainjs%40workspace%3A.":
+"typedoc-plugin-markdown@patch:typedoc-plugin-markdown@npm%3A4.0.0-next.6#./.yarn/patches/typedoc-plugin-markdown-npm-4.0.0-next.6-96b4b47746.patch::locator=yilangchainjs%40workspace%3A.":
   version: 4.0.0-next.6
-  resolution: "typedoc-plugin-markdown@patch:typedoc-plugin-markdown@npm%3A4.0.0-next.6#./.yarn/patches/typedoc-plugin-markdown-npm-4.0.0-next.6-96b4b47746.patch::version=4.0.0-next.6&hash=a0cf58&locator=%40yi%2Flangchainjs%40workspace%3A."
+  resolution: "typedoc-plugin-markdown@patch:typedoc-plugin-markdown@npm%3A4.0.0-next.6#./.yarn/patches/typedoc-plugin-markdown-npm-4.0.0-next.6-96b4b47746.patch::version=4.0.0-next.6&hash=a0cf58&locator=yilangchainjs%40workspace%3A."
   peerDependencies:
     prettier: ">=1.8.0"
     typedoc: ">=0.24.0"
@@ -27614,6 +27583,207 @@ __metadata:
   checksum: 7f21fe0bbad6e2cb130044a5d1d0d5a0e5bf3d8d4f8c4e6ee12163ce798fee3de7388d22a7a0907f563ac5f9d40f8699a223d3d5c1718da90b0156da6904022b
   languageName: node
   linkType: hard
+
+"yilangchain@workspace:yilangchain":
+  version: 0.0.0-use.local
+  resolution: "yilangchain@workspace:yilangchain"
+  dependencies:
+    "@anthropic-ai/sdk": ^0.4.3
+    "@aws-sdk/client-dynamodb": ^3.310.0
+    "@aws-sdk/client-lambda": ^3.310.0
+    "@aws-sdk/client-s3": ^3.310.0
+    "@aws-sdk/client-sagemaker-runtime": ^3.310.0
+    "@clickhouse/client": ^0.0.14
+    "@faker-js/faker": ^7.6.0
+    "@getmetal/metal-sdk": ^2.0.1
+    "@huggingface/inference": ^1.5.1
+    "@jest/globals": ^29.5.0
+    "@opensearch-project/opensearch": ^2.2.0
+    "@pinecone-database/pinecone": ^0.0.14
+    "@supabase/supabase-js": ^2.10.0
+    "@tensorflow-models/universal-sentence-encoder": ^1.3.3
+    "@tensorflow/tfjs-backend-cpu": ^4.4.0
+    "@tensorflow/tfjs-converter": ^4.4.0
+    "@tensorflow/tfjs-core": ^4.4.0
+    "@tsconfig/recommended": ^1.0.2
+    "@types/d3-dsv": ^2
+    "@types/flat": ^5.0.2
+    "@types/html-to-text": ^9
+    "@types/object-hash": ^3.0.2
+    "@types/pdf-parse": ^1.1.1
+    "@types/uuid": ^9
+    "@typescript-eslint/eslint-plugin": ^5.58.0
+    "@typescript-eslint/parser": ^5.58.0
+    ansi-styles: ^5.0.0
+    apify-client: ^2.7.1
+    axios: ^0.26.0
+    binary-extensions: ^2.2.0
+    cheerio: ^1.0.0-rc.12
+    chromadb: ^1.4.0
+    cohere-ai: ^5.0.2
+    d3-dsv: ^2.0.0
+    dotenv: ^16.0.3
+    dpdm: ^3.12.0
+    epub2: ^3.0.1
+    eslint: ^8.33.0
+    eslint-config-airbnb-base: ^15.0.0
+    eslint-config-prettier: ^8.6.0
+    eslint-plugin-import: ^2.27.5
+    eslint-plugin-no-instanceof: ^1.0.1
+    eslint-plugin-prettier: ^4.2.1
+    expr-eval: ^2.0.2
+    flat: ^5.0.2
+    graphql: ^16.6.0
+    hnswlib-node: ^1.4.2
+    html-to-text: ^9.0.5
+    jest: ^29.5.0
+    jsonpointer: ^5.0.1
+    mammoth: ^1.5.1
+    meriyah: ^4.3.7
+    ml-distance: ^4.0.0
+    mongodb: ^5.2.0
+    object-hash: ^3.0.0
+    openai: ^3.2.0
+    p-queue: ^6.6.2
+    p-retry: 4
+    pdf-parse: 1.1.1
+    playwright: ^1.32.1
+    prettier: ^2.8.3
+    puppeteer: ^19.7.2
+    redis: ^4.6.6
+    release-it: ^15.10.1
+    replicate: ^0.9.0
+    rollup: ^3.19.1
+    sqlite3: ^5.1.4
+    srt-parser-2: ^1.2.2
+    ts-jest: ^29.1.0
+    typeorm: ^0.3.12
+    typescript: ^5.0.0
+    uuid: ^9.0.0
+    weaviate-ts-client: ^1.0.0
+    yaml: ^2.2.1
+    zod: ^3.21.4
+    zod-to-json-schema: ^3.20.4
+  peerDependencies:
+    "@aws-sdk/client-dynamodb": ^3.310.0
+    "@aws-sdk/client-lambda": ^3.310.0
+    "@aws-sdk/client-s3": ^3.310.0
+    "@aws-sdk/client-sagemaker-runtime": ^3.310.0
+    "@clickhouse/client": ^0.0.14
+    "@getmetal/metal-sdk": "*"
+    "@huggingface/inference": ^1.5.1
+    "@opensearch-project/opensearch": "*"
+    "@pinecone-database/pinecone": "*"
+    "@supabase/supabase-js": ^2.10.0
+    "@tensorflow-models/universal-sentence-encoder": "*"
+    "@tensorflow/tfjs-converter": "*"
+    "@tensorflow/tfjs-core": "*"
+    "@zilliz/milvus2-sdk-node": ^2.2.0
+    apify-client: ^2.7.1
+    axios: "*"
+    cheerio: ^1.0.0-rc.12
+    chromadb: ^1.4.0
+    cohere-ai: ^5.0.2
+    d3-dsv: ^2.0.0
+    epub2: ^3.0.1
+    hnswlib-node: ^1.4.2
+    html-to-text: ^9.0.5
+    mammoth: "*"
+    meriyah: "*"
+    mongodb: ^5.2.0
+    pdf-parse: 1.1.1
+    playwright: ^1.32.1
+    puppeteer: ^19.7.2
+    redis: ^4.6.4
+    replicate: ^0.9.0
+    srt-parser-2: ^1.2.2
+    typeorm: ^0.3.12
+    weaviate-ts-client: ^1.0.0
+  peerDependenciesMeta:
+    "@aws-sdk/client-dynamodb":
+      optional: true
+    "@aws-sdk/client-lambda":
+      optional: true
+    "@aws-sdk/client-s3":
+      optional: true
+    "@aws-sdk/client-sagemaker-runtime":
+      optional: true
+    "@clickhouse/client":
+      optional: true
+    "@getmetal/metal-sdk":
+      optional: true
+    "@huggingface/inference":
+      optional: true
+    "@opensearch-project/opensearch":
+      optional: true
+    "@pinecone-database/pinecone":
+      optional: true
+    "@supabase/supabase-js":
+      optional: true
+    "@tensorflow-models/universal-sentence-encoder":
+      optional: true
+    "@tensorflow/tfjs-converter":
+      optional: true
+    "@tensorflow/tfjs-core":
+      optional: true
+    "@zilliz/milvus2-sdk-node":
+      optional: true
+    apify-client:
+      optional: true
+    axios:
+      optional: true
+    cheerio:
+      optional: true
+    chromadb:
+      optional: true
+    cohere-ai:
+      optional: true
+    d3-dsv:
+      optional: true
+    epub2:
+      optional: true
+    hnswlib-node:
+      optional: true
+    html-to-text:
+      optional: true
+    mammoth:
+      optional: true
+    meriyah:
+      optional: true
+    mongodb:
+      optional: true
+    pdf-parse:
+      optional: true
+    playwright:
+      optional: true
+    puppeteer:
+      optional: true
+    redis:
+      optional: true
+    replicate:
+      optional: true
+    srt-parser-2:
+      optional: true
+    typeorm:
+      optional: true
+    weaviate-ts-client:
+      optional: true
+  languageName: unknown
+  linkType: soft
+
+"yilangchainjs@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "yilangchainjs@workspace:."
+  dependencies:
+    "@tsconfig/recommended": ^1.0.2
+    dotenv: ^16.0.3
+    husky: ^8.0.3
+    lint-staged: ^13.1.1
+    prettier: ^2.8.3
+    turbo: latest
+    typescript: ^5.0.0
+  languageName: unknown
+  linkType: soft
 
 "yocto-queue@npm:^0.1.0":
   version: 0.1.0

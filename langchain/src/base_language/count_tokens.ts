@@ -1,25 +1,10 @@
-let GPT3Tokenizer: typeof import("gpt3-tokenizer");
-
-const importTokenizers = async () => {
-  if (!GPT3Tokenizer) {
-    GPT3Tokenizer = (await import("gpt3-tokenizer")).default;
-  }
-  const tokenizer = new GPT3Tokenizer.default({
-    type: "gpt3",
-  });
-  return tokenizer;
+export let countTokensInText: (text: string) => number = (text: string) => {
+  return text.split(/\s+/).length;
 };
 
-export const createCountTokensInText = async () => {
-  const tokenizer = await importTokenizers();
-  return countTokensInText(tokenizer);
+export const setCountTokensInTextFunc = (func: typeof countTokensInText) => {
+  countTokensInText = func;
 };
-
-export const countTokensInText =
-  (tokenizer: Awaited<ReturnType<typeof importTokenizers>>) =>
-  (text: string) => {
-    return tokenizer.encode(text).text.length;
-  };
 
 export const getModelNameForTiktoken = (modelName: string): string => {
   if (modelName.startsWith("gpt-3.5-turbo-")) {
@@ -87,18 +72,16 @@ export const batchTextByTokens = async (
   let currentTokenCount = 0;
   const groups = [];
 
-  const counter = await createCountTokensInText();
-
   for (let i = 0; i < splitted.length; i++) {
     const word = splitted[i];
-    const tokenCount = counter(word);
+    const tokenCount = countTokensInText(word);
 
     if (currentTokenCount + tokenCount > chunkSize) {
       groups.push(currentGroup.join(" "));
 
       const overlapStart = Math.max(0, currentGroup.length - chunkOverlapToken);
       currentGroup = currentGroup.slice(overlapStart);
-      currentTokenCount = counter(currentGroup.join(" "));
+      currentTokenCount = countTokensInText(currentGroup.join(" "));
     }
 
     currentGroup.push(word);
