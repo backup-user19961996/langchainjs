@@ -1,6 +1,6 @@
 import { type TiktokenModel } from "js-tiktoken/lite";
 import { encodingForModel } from "../util/tiktoken.js";
-
+export * from "../util/tiktoken.js";
 // https://www.npmjs.com/package/js-tiktoken
 
 export const getModelNameForTiktoken = (modelName: string): TiktokenModel => {

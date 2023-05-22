@@ -8,10 +8,8 @@ import { CallbackManager, Callbacks } from "../callbacks/manager.js";
 import { AsyncCaller, AsyncCallerParams } from "../util/async_caller.js";
 import { getModelNameForTiktoken } from "./count_tokens.js";
 import { encodingForModel } from "../util/tiktoken.js";
-
-const getVerbosity = () => false;
-
 export * from "./count_tokens.js";
+const getVerbosity = () => false;
 
 export type SerializedLLM = {
   _model: string;
