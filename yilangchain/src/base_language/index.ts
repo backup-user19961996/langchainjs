@@ -1,4 +1,3 @@
-import { type Tiktoken } from "js-tiktoken/lite";
 import {
   BaseChatMessage,
   BasePromptValue,
@@ -6,8 +5,7 @@ import {
 } from "../schema/index.js";
 import { CallbackManager, Callbacks } from "../callbacks/manager.js";
 import { AsyncCaller, AsyncCallerParams } from "../util/async_caller.js";
-import { getModelNameForTiktoken } from "./count_tokens.js";
-import { encodingForModel } from "../util/tiktoken.js";
+import { countTokensInText } from "./count_tokens.js";
 export * from "./count_tokens.js";
 const getVerbosity = () => false;
 
@@ -124,32 +122,8 @@ export abstract class BaseLanguageModel
 
   abstract _llmType(): string;
 
-  private _encoding?: Tiktoken;
-
   async getNumTokens(text: string) {
-    // fallback to approximate calculation if tiktoken is not available
-    let numTokens = Math.ceil(text.length / 4);
-
-    if (!this._encoding) {
-      try {
-        this._encoding = await encodingForModel(
-          "modelName" in this
-            ? getModelNameForTiktoken(this.modelName as string)
-            : "gpt2"
-        );
-      } catch (error) {
-        console.warn(
-          "Failed to calculate number of tokens, falling back to approximate count",
-          error
-        );
-      }
-    }
-
-    if (this._encoding) {
-      numTokens = this._encoding.encode(text).length;
-    }
-
-    return numTokens;
+    return countTokensInText(text);
   }
 
   /**
@@ -188,3 +162,9 @@ export abstract class BaseLanguageModel
     return new Cls(rest);
   }
 }
+
+/*
+ * Calculate max tokens for given model and prompt.
+ * That is the model size - number of tokens in prompt.
+ */
+export { calculateMaxTokens } from "./count_tokens.js";

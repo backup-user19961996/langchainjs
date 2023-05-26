@@ -181,7 +181,6 @@ Bye!\n\n-H.`;
 test("Token text splitter", async () => {
   const text = "foo bar baz a a";
   const splitter = new TokenTextSplitter({
-    encodingName: "r50k_base",
     chunkSize: 3,
     chunkOverlap: 0,
   });

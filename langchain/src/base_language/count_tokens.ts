@@ -1,7 +1,49 @@
 import { type TiktokenModel } from "js-tiktoken/lite";
-import { encodingForModel } from "../util/tiktoken.js";
-export * from "../util/tiktoken.js";
 // https://www.npmjs.com/package/js-tiktoken
+
+let countTokensInText = (text: string) => {
+  return text.split(/\s+/).length;
+};
+
+export const setCountTokenInText = (func: (text: string) => number) => {
+  countTokensInText = func;
+};
+
+export { countTokensInText };
+
+export const batchTextByTokens = async (
+  text: string,
+  chunkSize: number,
+  chunkOverlapToken: number
+) => {
+  const splitted = text.split(/\s+/);
+
+  let currentGroup: string[] = [];
+  let currentTokenCount = 0;
+  const groups = [];
+
+  for (let i = 0; i < splitted.length; i++) {
+    const word = splitted[i];
+    const tokenCount = countTokensInText(word);
+
+    if (currentTokenCount + tokenCount > chunkSize) {
+      groups.push(currentGroup.join(" "));
+
+      const overlapStart = Math.max(0, currentGroup.length - chunkOverlapToken);
+      currentGroup = currentGroup.slice(overlapStart);
+      currentTokenCount = countTokensInText(currentGroup.join(" "));
+    }
+
+    currentGroup.push(word);
+    currentTokenCount += tokenCount;
+  }
+
+  if (currentGroup.length > 0) {
+    groups.push(currentGroup.join(" "));
+  }
+
+  return groups;
+};
 
 export const getModelNameForTiktoken = (modelName: string): TiktokenModel => {
   if (modelName.startsWith("gpt-3.5-turbo-")) {
@@ -66,7 +108,7 @@ export const calculateMaxTokens = async ({
   let numTokens = Math.ceil(prompt.length / 4);
 
   try {
-    numTokens = (await encodingForModel(modelName)).encode(prompt).length;
+    numTokens = countTokensInText(prompt);
   } catch (error) {
     console.warn(
       "Failed to calculate number of tokens, falling back to approximate count"

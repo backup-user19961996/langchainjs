@@ -11,7 +11,6 @@ export const run = async () => {
   );
 
   const splitter = new TokenTextSplitter({
-    encodingName: "r50k_base",
     chunkSize: 10,
     chunkOverlap: 0,
     allowedSpecial: ["<|endoftext|>"],

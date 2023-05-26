@@ -1,29 +1,24 @@
 /* eslint-disable no-promise-executor-return */
+/* eslint-disable no-process-env */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { test, expect } from "@jest/globals";
-import { createClient } from "redis";
-import { RedisChatMessageHistory } from "../message/redis.js";
+
+import { UpstashRedisChatMessageHistory } from "../message/upstash_redis.js";
 import { HumanChatMessage, AIChatMessage } from "../../schema/index.js";
 import { ChatOpenAI } from "../../chat_models/openai.js";
 import { ConversationChain } from "../../chains/conversation.js";
 import { BufferMemory } from "../../memory/buffer_memory.js";
 
-afterAll(async () => {
-  const client = createClient();
-  await client.connect();
-  await client.flushDb();
-  await client.disconnect();
-});
+const config = {
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+};
 
-/**
- * To run this integration test, you need to have a Redis server running locally.
- *
- * `docker run -p 6379:6379 -p 8001:8001 redis/redis-stack:latest`
- */
-
-test("Test Redis history store", async () => {
-  const chatHistory = new RedisChatMessageHistory({
+test("Test Redis Upstash history store", async () => {
+  const chatHistory = new UpstashRedisChatMessageHistory({
     sessionId: new Date().toISOString(),
+    config,
   });
 
   const blankResult = await chatHistory.getMessages();
@@ -41,9 +36,10 @@ test("Test Redis history store", async () => {
   expect(resultWithHistory).toEqual(expectedMessages);
 });
 
-test("Test clear Redis history store", async () => {
-  const chatHistory = new RedisChatMessageHistory({
+test("Test clear Redis Upstash history store", async () => {
+  const chatHistory = new UpstashRedisChatMessageHistory({
     sessionId: new Date().toISOString(),
+    config,
   });
 
   await chatHistory.addUserMessage("Who is the best vocalist?");
@@ -63,10 +59,11 @@ test("Test clear Redis history store", async () => {
   expect(blankResult).toStrictEqual([]);
 });
 
-test("Test Redis history with a TTL", async () => {
-  const chatHistory = new RedisChatMessageHistory({
+test("Test Redis Upstash history with a TTL", async () => {
+  const chatHistory = new UpstashRedisChatMessageHistory({
     sessionId: new Date().toISOString(),
     sessionTTL: 5,
+    config,
   });
 
   const blankResult = await chatHistory.getMessages();
@@ -89,11 +86,12 @@ test("Test Redis history with a TTL", async () => {
   expect(expiredResult).toStrictEqual([]);
 });
 
-test("Test Redis memory with Buffer Memory", async () => {
+test("Test Redis Upstash memory with Buffer Memory", async () => {
   const memory = new BufferMemory({
     returnMessages: true,
-    chatHistory: new RedisChatMessageHistory({
+    chatHistory: new UpstashRedisChatMessageHistory({
       sessionId: new Date().toISOString(),
+      config,
     }),
   });
 
@@ -111,10 +109,11 @@ test("Test Redis memory with Buffer Memory", async () => {
   expect(result2).toStrictEqual({ history: expectedHistory });
 });
 
-test("Test Redis memory with LLM Chain", async () => {
+test("Test Redis Upstash memory with LLM Chain", async () => {
   const memory = new BufferMemory({
-    chatHistory: new RedisChatMessageHistory({
+    chatHistory: new UpstashRedisChatMessageHistory({
       sessionId: new Date().toISOString(),
+      config,
     }),
   });
 
@@ -129,4 +128,6 @@ test("Test Redis memory with LLM Chain", async () => {
 
   const res2 = await chain.call({ input: "What did I just say my name was?" });
   console.log({ res2 });
+
+  expect(res2.response).toContain("Jim");
 });
